@@ -1,0 +1,16 @@
+{
+    "name": "wago-id/php-sdk",
+    "description": "Official PHP SDK for WAGO Payment ID",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Wago\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "ext-curl": "*"
+    }
+}
