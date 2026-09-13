@@ -20,7 +20,7 @@ class Wago {
         $this->webhookSecret = $options['webhookSecret'] ?? '';
         
         $isProduction = $options['isProduction'] ?? true;
-        $this->baseUrl = $isProduction ? 'https://api.wago-id.web.id/api' : 'https://api.wago-id.web.id/api';
+        $this->baseUrl = $isProduction ? 'https://pay.wago-id.web.id/api' : 'https://sandbox.wago-id.web.id/api';
     }
 
     private function request(string $method, string $endpoint, array $data = null) {
@@ -62,8 +62,12 @@ class Wago {
         return $this->request('POST', '/order', $payload);
     }
 
-    public function getTransactionStatus(string $orderId) {
-        return $this->request('GET', '/order?id=' . urlencode($orderId));
+    public function getTransactionStatus(string $orderId, string $orderToken = '') {
+        $payload = ['order_id' => $orderId];
+        if (!empty($orderToken)) {
+            $payload['order_token'] = $orderToken;
+        }
+        return $this->request('POST', '/order/check-status', $payload);
     }
 
     public function verifyWebhook(array $body, string $signature, string $timestamp): bool {
